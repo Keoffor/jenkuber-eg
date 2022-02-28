@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('Test') {
       steps {
+        sh 'ls $WORKSPACE '
         dir("jenkuber-eg") {
         sh 'echo "Hello World"'
           withMaven {
