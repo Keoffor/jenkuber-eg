@@ -1,9 +1,11 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('Test') {
       steps {
+        dir("jenkuber-eg") {
         sh 'echo "Hello World"'
+        }
       }
     }
 
