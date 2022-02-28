@@ -5,9 +5,7 @@ pipeline {
       steps {
         dir("jenkuber-eg") {
         sh 'echo "Hello World"'
-          withMaven {
-            sh 'mvn test'
-        }
+        
       }
     }
 
