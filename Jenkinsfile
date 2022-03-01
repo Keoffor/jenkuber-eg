@@ -20,9 +20,13 @@ pipeline {
                    branch 'main'
                }
                steps {
+                    sh 'ls $WORKSPACE '
+                            dir("project2") {
+                            sh 'echo "Hello World"'
                    withMaven {
                        sh 'mvn clean package -DskipTests'
                    }
+               }
                }
            }
 }

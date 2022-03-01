@@ -4,61 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="073ed933-b5c0-4c77-a971-cfab5ca6de3b" name="Changes" comment="" />
+    <list default="true" id="732f1855-f09b-4dd7-a83f-86e468dc1e10" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/Jenkinsfile" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CodeStyleSettingsInfer">
-    <option name="done" value="true" />
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JpbToolWindowState">
-    <option name="myId2FirstActivated">
-      <map>
-        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
-      </map>
-    </option>
     <option name="myId2Visible">
       <map>
         <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
-  <component name="ProjectCodeStyleSettingsMigration">
-    <option name="version" value="2" />
-  </component>
-  <component name="ProjectId" id="25nkjp24g97TD0y2gmGo81LPh6n" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="073ed933-b5c0-4c77-a971-cfab5ca6de3b" name="Changes" comment="" />
-      <created>1646170376887</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1646170376887</updated>
-    </task>
     <servers />
   </component>
 </project>
