@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.print.Doc;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -93,12 +91,7 @@ public class DoctorService {
         List<Med_records> filter = patientNoteRepo.findPatientById(id);
         return filter;
     }
-//    private List<Med_records> filterDoctor(int id){
-//        List<Med_records> filter = patientNoteRepo.findByRecordingDoctor(id);
-//
-//        return filter;
-//
-//    }
+
     public PatientResponse accessPatientRecords(Patientid id) throws Exception{
         Optional<Patient> check = findPatientbyId(id.getPatient_id());
 
