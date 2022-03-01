@@ -17,15 +17,14 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "requesting_doctor")
-    private Doctor doctor;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_for")
-    private Patient patient;
+    @Column(name = "requesting_doctor")
+    private  int doctor;
+
+    @Column(name = "patient_for")
+    private int patient;
 
     @Column(name = "schedule", nullable = false)
     private String schedule;

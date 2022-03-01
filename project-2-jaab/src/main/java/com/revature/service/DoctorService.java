@@ -2,7 +2,7 @@ package com.revature.service;
 
 import com.revature.dao.*;
 import com.revature.dto.DoctorDTO;
-import com.revature.dto.PatientNoteDTO;
+import com.revature.dto.Med_recordsDTO;
 import com.revature.dto.PrescriptionDTO;
 import com.revature.model.*;
 import com.revature.model.Status;
@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,15 +71,16 @@ public class DoctorService {
     }
 
     public Patient medicalRecords(Notes note) throws Exception{
-        PatientNote pn = new PatientNote();
+        Med_records pn = new Med_records();
         Optional<Doctor> getdoctor = doctorRepository.findById(note.getDoctor_id());
         Doctor doctor = getdoctor.isPresent()?getdoctor.get():null;
         Optional<Patient> getpatient = findPatientbyId(note.getPatient_id());
         Patient patient = getpatient.isPresent()?getpatient.get():null;
         if(doctor!=null && patient !=null){
-            pn.setDoctor(doctor);
-            pn.setPatient(patient);
+            pn.setDoctor(doctor.getId());
+            pn.setPatient(patient.getId());
             pn.setNotes(note.getNotes());
+            pn.setDateCreated(new Date());
             patientNoteRepo.save(pn);
         }else{
             logger.info("invalid doctor id or patient id");
@@ -86,16 +89,16 @@ public class DoctorService {
         return patient;
 
     }
-    private List<PatientNote> filterPatient(int id){
-        List<PatientNote> filter = patientNoteRepo.findByPatient(id);
+    private List<Med_records> filterPatient(int id){
+        List<Med_records> filter = patientNoteRepo.findPatientById(id);
         return filter;
     }
-    private List<PatientNote> filterDoctor(int id){
-        List<PatientNote> filter = patientNoteRepo.findByRecordingDoctor(id);
-
-        return filter;
-
-    }
+//    private List<Med_records> filterDoctor(int id){
+//        List<Med_records> filter = patientNoteRepo.findByRecordingDoctor(id);
+//
+//        return filter;
+//
+//    }
     public PatientResponse accessPatientRecords(Patientid id) throws Exception{
         Optional<Patient> check = findPatientbyId(id.getPatient_id());
 
@@ -110,18 +113,22 @@ public class DoctorService {
             pr.setEmail(getTheId.getEmail());
             pr.setFirstName(getTheId.getFirstName());
             pr.setLastName(getTheId.getLastName());
-            List<PatientNote> p = filterPatient(getTheId.getId());
+            String patientFullName = pr.getFirstName() + " " + pr.getLastName();
+            List<Med_records> p = filterPatient(getTheId.getId());
 
-            List<PatientNoteDTO> get = p.stream().map(e -> {
-                PatientNoteDTO patientNoteDTO = new PatientNoteDTO();
-                patientNoteDTO.setId(e.getId());
-                String patientFullName = e.getPatient().getFirstName()+", "+ e.getPatient().getLastName();
-                patientNoteDTO.setPatient(patientFullName);
-                String doctorFullName = e.getDoctor().getFirstName() +","+e.getDoctor().getLastName();
-                patientNoteDTO.setDoctor(doctorFullName);
-                patientNoteDTO.setNotes(e.getNotes());
-                patientNoteDTO.setDateCreated(e.getDateCreated());
-                return patientNoteDTO;
+            List<Med_recordsDTO> get = p.stream().map(e -> {
+                Med_recordsDTO medrecords = new Med_recordsDTO();
+                medrecords.setId(e.getId());
+
+                medrecords.setPatient(patientFullName);
+                Optional<Doctor> getdoc = doctorRepository.findById(e.getDoctor());
+                if(getdoc.isPresent()){
+                    String fullName = getdoc.get().getFirstName() +" " + getdoc.get().getLastName();
+                    medrecords.setDoctor(fullName);
+                }
+                medrecords.setDateCreated(new Date());
+                medrecords.setNotes(e.getNotes());
+                return medrecords;
             }).collect(Collectors.toList());
 
             pr.setPatientNotes(get);
@@ -137,8 +144,8 @@ public class DoctorService {
         Optional<Patient> getPatient = findPatientbyId(detail.getPatient_id());
         Patient patient = getPatient.isPresent()? getPatient.get():null;
         if(doctor!=null && patient !=null){
-            appointment.setDoctor(doctor);
-            appointment.setPatient(patient);
+            appointment.setDoctor(doctor.getId());
+            appointment.setPatient(patient.getId());
             appointment.setSchedule(detail.getSchedule());
             appointment.setAppointmentTime(detail.getAppointmentTime());
             appointRepo.save(appointment);
@@ -154,34 +161,32 @@ public class DoctorService {
 
     }
 
-    public Prescription prescription (PrescriptionDTO pdto){
+    public Prescription prescription (PrescriptionDTO pdto) {
         Pharmacist pharmacist = getphamEmail(pdto.getPharmacist_email());
         Prescription prescription = new Prescription();
         Optional<Doctor> getdoc = doctorRepository.findById(pdto.getDoctor_id());
-        Doctor doctor = getdoc.isPresent()? getdoc.get():null;
+        Doctor doctor = getdoc.isPresent() ? getdoc.get() : null;
         Optional<Patient> getPatient = findPatientbyId(pdto.getPatient_id());
-        Patient patient = getPatient.isPresent()? getPatient.get():null;
+        Patient patient = getPatient.isPresent() ? getPatient.get() : null;
 
-        if(pharmacist==null){
+        if (pharmacist == null) {
             logger.info("this email does not exist");
-        }else{
+        } else {
+            if (doctor != null && patient != null) {
+                prescription.setDoctor(doctor.getId());
+                prescription.setPatient(patient.getId());
+                prescription.setStatus(Status.PENDING);
+                prescription.setDosage(pdto.getDosage());
+                prescription.setMedicineName(pdto.getMedicineName());
+                prescription.setPharmacistEmail(pharmacist.getEmail());
+                prescription.setPharmacistName(pharmacist.getFirstName());
+                prepRepo.save(prescription);
 
-        if(doctor!=null & patient !=null){
-            prescription.setDoctor(doctor);
-            prescription.setPatient(patient);
-            prescription.setStatus(Status.PENDING);
-            prescription.setDosage(pdto.getDosage());
-            prescription.setMedicineName(pdto.getMedicineName());
-            prescription.setPharmacist(pharmacist);
-            prepRepo.save(prescription);
+            } else {
+                logger.info("doctor id/patient is invalid");
+            }
+        }
 
-        }else{
-            logger.info("wrong doctor id or patient id");
-        }}
-        return prescription;
-
-
-
+            return prescription;
     }
-
 }

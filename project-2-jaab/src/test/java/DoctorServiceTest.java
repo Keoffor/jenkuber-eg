@@ -53,7 +53,7 @@ public class DoctorServiceTest {
     Doctor doctor = new Doctor(2,"Frank","Okro","email.com","password", Role.PHYSICIAN);
     DoctorDTO doctorDTO = new DoctorDTO(1, "george","Same","john","ddkdk");
     Patient patient = new Patient(2,"Grace","Emma","slsl@yahoo.com","dhd",900L,"A");
-    Appointment appointment = new Appointment(1,doctor,patient,"james",new Date());
+    Appointment appointment = new Appointment(1,2,7,"james",new Date());
     Pharmacist pharmacist = new Pharmacist();
     Notes notes = new Notes();
     DoctorDetails doctorDetails = new DoctorDetails();
@@ -121,7 +121,7 @@ public class DoctorServiceTest {
      Mockito.when(patientRepository.findById(anyInt())).thenReturn(Optional.of(patient));
      Mockito.when(appointmentRepository.save(appointment)).thenReturn(appointment);
      Appointment appoint = doctorService.doctorAppointment(doctorDetails);
-     Assert.assertEquals(appoint.getPatient(),patient);
+     Assert.assertEquals(appoint.getPatient(),2);
 
  }
 
@@ -134,17 +134,17 @@ public class DoctorServiceTest {
  }
 
 @Test
-    public void prescriptionTest(){
+    public void prescriptionTest() throws Exception {
     Mockito.when(pharmacistRepository.findByEmail(any())).thenReturn(pharmacist);
     Mockito.when(doctorRepository.findById(anyInt())).thenReturn(Optional.of(doctor));
     Mockito.when(patientRepository.findById(anyInt())).thenReturn(Optional.of(patient));
     Mockito.when(preprepository.save(prescription)).thenReturn(prescription);
     Prescription getprep = doctorService.prescription(prepDTO);
-    Assert.assertEquals(getprep.getDoctor(),doctor);
+    Assert.assertEquals(getprep.getDoctor(),2);
 
     }
 @Test
-    public void setPrescriptionTestShouldReturnError(){
+    public void setPrescriptionTestShouldReturnError() throws Exception {
         Mockito.when(pharmacistRepository.findByEmail(any())).thenReturn(null);
         Mockito.when(doctorRepository.findById(anyInt())).thenReturn(Optional.empty());
         Mockito.when(patientRepository.findById(anyInt())).thenReturn(Optional.empty());
