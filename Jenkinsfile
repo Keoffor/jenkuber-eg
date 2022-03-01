@@ -4,7 +4,7 @@ pipeline {
     stage('Test') {
       steps {
         sh 'ls $WORKSPACE '
-        dir("project-2-jaab") {
+        dir("project-2") {
         sh 'echo "Hello Team3"'
           withMaven {
             sh 'mvn test'
