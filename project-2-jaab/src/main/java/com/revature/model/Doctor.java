@@ -39,12 +39,10 @@ public class Doctor {
 
     @Enumerated(EnumType.STRING)
     private Role roles;
-
     @Transient
-    private List<Patient> patients;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor", cascade = CascadeType.ALL)
-    private List<PatientNote> notes;
+    private String patients;
+    @Transient
+    private String notes;
 
 
 

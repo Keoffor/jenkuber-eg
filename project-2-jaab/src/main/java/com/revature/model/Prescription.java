@@ -16,15 +16,13 @@ import java.util.List;
 public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "requesting_doctor")
-    private Doctor doctor;
+    @Column(name = "requesting_doctor")
+    private int doctor;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_for")
-    private Patient patient;
+    @Column(name = "patient_for")
+    private int patient;
 
     @Column(name = "medicine_name", nullable = false)
     private String medicineName;
@@ -37,5 +35,8 @@ public class Prescription {
     private Status status;
 
     @Transient
-    private Pharmacist pharmacist;
+    private String pharmacistEmail ;
+
+    @Transient
+    private String pharmacistName;
 }

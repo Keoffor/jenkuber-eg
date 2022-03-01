@@ -36,11 +36,11 @@ public class Patient {
     @Column(name = "blood_type", nullable = false)
     private String bloodType;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<PatientNote> notes;
+    @Transient
+    private String notes;
 
     @Transient
-    private Doctor doctor;
+    private String doctor;
 
     public Patient(Integer id, String firstName, String lastName, String email, String password, Long phoneNumber, String bloodType) {
         this.id = id;

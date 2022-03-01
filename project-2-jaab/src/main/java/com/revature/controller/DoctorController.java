@@ -4,7 +4,6 @@ package com.revature.controller;
 import com.revature.dto.DoctorDTO;
 import com.revature.dto.PrescriptionDTO;
 import com.revature.model.Appointment;
-import com.revature.model.Patient;
 import com.revature.model.Prescription;
 import com.revature.service.DoctorService;
 import com.revature.utils.DoctorDetails;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/hospital")
@@ -25,8 +23,6 @@ public class DoctorController {
     @Autowired
     DoctorService doctorService;
 
-    @Autowired
-    RestTemplate restTemplate;
 
     @PostMapping(value = "/addDoctor", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addDoctor(@RequestBody DoctorDTO em) {
@@ -54,7 +50,8 @@ public class DoctorController {
     @PostMapping(value ="/appointment", produces = MediaType.APPLICATION_JSON_VALUE)
             public ResponseEntity doctorAppointment(@RequestBody DoctorDetails d){
         Appointment appointment = doctorService.doctorAppointment(d);
-        if(appointment.getDoctor() !=null && appointment.getPatient()!=null){
+        if(appointment.getDoctor()!=0){
+            //TODO rest template for patient appointment here:
             return ResponseEntity.status(HttpStatus.OK).body("Appointment is sent");
         }else{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("doctors id or patient id is incorrect");
@@ -76,9 +73,11 @@ public class DoctorController {
 
     }
     @PostMapping(value = "/prescription", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity prescription(@RequestBody PrescriptionDTO dto){
+    public ResponseEntity prescription(@RequestBody PrescriptionDTO dto) throws Exception {
         Prescription prep = doctorService.prescription(dto);
-        if (prep.getDoctor()!=null && prep.getPatient()!=null && prep.getPharmacist()!=null){
+        if (prep.getDoctor() == dto.getDoctor_id() && prep.getPatient() ==dto.getPatient_id()){
+
+            //TODO RestTemplate for the prescription and the pharmacist info.
             return ResponseEntity.status(HttpStatus.OK).body("prescription is sent");
         }else{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("invalid credentials");

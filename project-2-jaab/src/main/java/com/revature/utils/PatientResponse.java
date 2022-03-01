@@ -1,6 +1,6 @@
 package com.revature.utils;
 
-import com.revature.dto.PatientNoteDTO;
+import com.revature.dto.Med_recordsDTO;
 
 import lombok.*;
 
@@ -19,5 +19,5 @@ public class PatientResponse {
     private String firstName;
     @NonNull
     private String lastName;
-    private List<PatientNoteDTO> patientNotes;
+    private List<Med_recordsDTO> patientNotes;
 }
