@@ -28,7 +28,7 @@ public class DoctorController {
     public ResponseEntity addDoctor(@RequestBody DoctorDTO em) {
         try {
             doctorService.saveDoctor(em);
-            return ResponseEntity.status(HttpStatus.OK).body("Successfully created");
+            return ResponseEntity.status(HttpStatus.OK).body("Successfully created thank yo");
         } catch (Exception e) {
 
             e.getMessage();

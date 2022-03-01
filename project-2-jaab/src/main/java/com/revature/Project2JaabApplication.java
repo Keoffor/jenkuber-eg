@@ -15,9 +15,5 @@ public class Project2JaabApplication {
         SpringApplication.run(Project2JaabApplication.class, args);
     }
 
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
-    }
 
 }
