@@ -1,4 +1,9 @@
 pipeline {
+    environment{
+        registry = 'keoffor/jenkuber-eg'
+        dockerHubCreds = 'Docker_hub'
+        dockerImage = ''
+    }
   agent any
   stages {
     stage('Test') {
@@ -29,5 +34,33 @@ pipeline {
                }
                }
            }
+            stage('Docker Build') {
+                   when {
+                       branch 'main'
+                   }
+                   steps {
+                        dir("project2") {
+                       script {
+                           echo "$registry:$currentBuild.number"
+                           dockerImage = docker.build "$registry"
+                       }
+                   }
+               }
+             }
+             stage('Docker Deliver') {
+                     when {
+                         branch 'main'
+                     }
+                     steps {
+                             dir("project2") {
+                         script {
+                             docker.withRegistry('', dockerHubCreds) {
+                                 dockerImage.push("$currentBuild.number")
+                                 dockerImage.push("latest")
+                             }
+                         }
+                     }
+                 }
+               }
 }
 }
