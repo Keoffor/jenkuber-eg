@@ -71,7 +71,7 @@ pipeline {
                           script {
 
                                 // Init authentication and config for your kubernetes cluster
-                                sh("helm init --client-only --skip-refresh")
+
                                 sh("helm upgrade --install jen-depo jenkins-chart/ --values templates/values.yaml -n default --wait")
 
                             }
