@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name}}
+  labels:
+    {{- include "jenkins-chart.labels" . | nindent 4}}
+spec:
+  replicas: {{ .Values.replicaCount}}
+  selector:
+    matchLabels:
+      {{- include "jenkins-chart.selectorLabels" . | nindent 6}}
+  template:
+    metadata:
+      labels:
+        {{- include "jenkins-chart.selectorLabels" . | nindent
+      8 }}
+    spec:
+      containers:
+        - image: {{ .Values.image.repository | quote}} 
+          imagePullPolicy: {{ .Values.image.pullPolicy}}
+          name: {{ .Values.container.name}}
+          ports:
+            - containerPort: {{ .Values.service.targetPort}}
+
+          resources:
+           {{- toYaml .Values.resources | nindent 12}}   
+           
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+spec:
+  defaultBackend:
+    service:
+      name: jen-service
+      port:
+        number: 4000         
+            
