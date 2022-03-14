@@ -1,6 +1,6 @@
 pipeline {
     environment{
-        registry = 'keoffor/kubernize'
+        registry = 'keoffor/kuber-demo'
         dockerHubCreds = 'Docker_hub'
         dockerImage = ''
     }
