@@ -25,15 +25,5 @@ spec:
           resources:
            {{- toYaml .Values.resources | nindent 12}}   
            
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: api-ingress
-spec:
-  defaultBackend:
-    service:
-      name: jen-service
-      port:
-        number: 4000         
+
             
