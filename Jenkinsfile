@@ -3,7 +3,6 @@ pipeline {
         registry = 'keoffor/kuber-demo'
         dockerHubCreds = 'Docker_hub'
         dockerImage = ''
-        deploymentfile = 'jenkins-chart/'
     }
   agent any
   stages {
@@ -70,11 +69,11 @@ pipeline {
                       steps {
                       dir("project2") {
                           script {
-                            container('helm') {
+
                                 // Init authentication and config for your kubernetes cluster
                                 sh("helm init --client-only --skip-refresh")
-                                sh("helm upgrade --install --wait jen-depo ./helm --namespace default")
-                              }
+                                sh("helm upgrade --install jen-depo jenkins-chart/ --values templates/values.yaml -n default --wait")
+
                             }
                           }
                       }
