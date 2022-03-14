@@ -1,10 +1,10 @@
 spring:
   application:
-    name: Patient_Access
+    name: Kuber-Demo
   datasource:
-    username: postgres
+    username: kuber-demo
     password: 1234
-    url: jdbc:postgresql://34.136.139.193/hospital
+    url: jdbc:postgresql://146.148.72.12/kuber-demo
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -23,7 +23,7 @@ spring:
 #  expiry: 360000
 
 server:
-  port: 4000
+  port: 4001
   servlet:
     context-path: /
 
