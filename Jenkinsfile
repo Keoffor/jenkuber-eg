@@ -62,5 +62,21 @@ pipeline {
                      }
                  }
                }
-}
+          stage('Deploy to Cluster') {
+                  when {
+                          branch 'main'
+                       }
+                      steps {
+                      dir("project2") {
+                          script {
+                            container('helm') {
+                                // Init authentication and config for your kubernetes cluster
+                                sh("helm init --client-only --skip-refresh")
+                                sh("helm upgrade --install --wait jen-depo ./jenkins-chart --namespace default")
+                              }
+                            }
+                          }
+                      }
+                  }
+    }
 }
