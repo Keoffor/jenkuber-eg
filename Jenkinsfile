@@ -1,6 +1,6 @@
 pipeline {
     environment{
-        registry = 'keoffor/jenkuber-eg'
+        registry = 'keoffor/kubernize'
         dockerHubCreds = 'Docker_hub'
         dockerImage = ''
     }
@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Test') {
         when{
-        branch 'kenz'
+        branch 'Development'
         }
       steps {
         sh 'ls $WORKSPACE '
@@ -27,7 +27,7 @@ pipeline {
                steps {
                     sh 'ls $WORKSPACE '
                             dir("project2") {
-                            sh 'echo "Hello World"'
+                            sh 'echo "Building..."'
                    withMaven {
                        sh 'mvn clean package -DskipTests'
                    }
