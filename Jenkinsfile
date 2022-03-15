@@ -64,13 +64,13 @@ pipeline {
                }
 
           node{
-            stage('Deploy to Cluster') {
+             stage('Deploy to Cluster') {
                   when {
                           branch 'main'
                        }
-                      steps {
-                      dir("project2") {
-                              withKubeConfig([credentialsId: 'user1', serverUrl: 'https://api.k8s.my-company.com']) {
+                  steps {
+                    dir("project2") {
+                              withKubeConfig([credentialsId: 'jenkinsproject-342600', serverUrl: 'https://kubernetes.default']) {
                                 sh("helm upgrade --install jen-depo jenkins-chart --values templates/values.yaml -n default ")
                               }
 
