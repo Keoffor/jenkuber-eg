@@ -63,7 +63,6 @@ pipeline {
                  }
                }
 
-          node{
              stage('Deploy to Cluster') {
                   when {
                           branch 'main'
@@ -77,6 +76,5 @@ pipeline {
                             }
                           }
                       }
-                  }
     }
 }
