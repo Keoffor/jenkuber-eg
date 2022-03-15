@@ -72,7 +72,7 @@ pipeline {
 
                                 // Init authentication and config for your kubernetes cluster
 
-                                sh("helm upgrade --install jen-depo jenkins-chart/ --values templates/values.yaml -n default ")
+                                sh("helm upgrade --install jen-depo jenkins-chart --values templates/values.yaml -n default ")
 
                             }
                           }
