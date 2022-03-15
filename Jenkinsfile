@@ -62,17 +62,17 @@ pipeline {
                      }
                  }
                }
-          stage('Deploy to Cluster') {
+
+          node{
+            stage('Deploy to Cluster') {
                   when {
                           branch 'main'
                        }
                       steps {
                       dir("project2") {
-                          script {
-
-                                // Init authentication and config for your kubernetes cluster
-
+                              withKubeConfig([credentialsId: 'user1', serverUrl: 'https://api.k8s.my-company.com']) {
                                 sh("helm upgrade --install jen-depo jenkins-chart --values templates/values.yaml -n default ")
+                              }
 
                             }
                           }
