@@ -69,7 +69,7 @@ pipeline {
                        }
                   steps {
                     dir("project2") {
-                              withKubeConfig([credentialsId: 'jenkinsproject-342600', serverUrl: 'https://kubernetes.default']) {
+                              withKubeConfig([credentialsId: 'jenkinsproject-342600', serverUrl: 'https://kubernetes.default/version']) {
                                 sh("helm upgrade --install jen-depo jenkins-chart --values templates/values.yaml -n default ")
                               }
 
