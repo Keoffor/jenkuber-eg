@@ -27,7 +27,7 @@ pipeline {
                steps {
                     sh 'ls $WORKSPACE '
                             dir("project2") {
-                            sh 'echo "Building loading.."'
+                            sh 'echo "Building"'
                    withMaven {
                        sh 'mvn clean package -DskipTests'
                    }
@@ -63,41 +63,45 @@ pipeline {
                  }
                }
 
-             stage('Deploy to Cluster') {
-                  when {
-                          branch 'main'
-                       }
-                  steps {
-                    dir("project2") {
-                              withKubeConfig([credentialsId: 'jenkinsproject-342600',
-                                 serverUrl: 'https://kubernetes/verison']) {
-                                sh("helm upgrade --install jen-depo jenkins-chart --values templates/values.yaml")
-                              }
-
-                            }
-                          }
-                      }
-
-//             stage('Deploy to GKE') {
-//                                when {
-//                                    branch 'main'
-//                                }
-//                                steps{
-//                                     echo "build deployment " + deploymentFile
-//                                     dir("project2") {
+//              stage('Deploy to Cluster') {
+//                   when {
+//                           branch 'main'
+//                        }
+//                   steps {
+//                     dir("project2") {
+//                               withKubeConfig([credentialsId: 'jenkinsproject-342600',
+//                                 caCertificate: '/etc/ssl/certs/',
+//                                  serverUrl: 'https://kubernetes.default',
+//                                  contextName: 'gke_jenkinsproject-342600_us-central1_jenkinsproject-342600-gke',
+//                                  clusterName: 'jenkinsproject-342600-gke',
+//                                  namespace: 'default']) {
+//                                 sh("helm upgrade --install jen-depo jenkins-chart --values templates/values.yaml -n default ")
+//                               }
 //
-//                                      sh 'sed -i "s/%TAG%/$BUILD_NUMBER/g" ./k8s/api1.yml'
-//                                      sh 'cat ./k8s/api1.yml'
-//                                    step([$class: 'KubernetesEngineBuilder',
-//                                        projectId: 'jenkinsproject-342600',
-//                                        clusterName: 'jenkinsproject-342600-gke',
-//                                        zone: 'us-central1',
-//                                        manifestPattern: 'k8s/',
-//                                        credentialsId: 'macro-key-339512',
-//                                        verifyDeployments: true
-//                                    ])
+//                             }
+//                           }
 //                       }
-//                   }
-//                 }
+
+            stage('Deploy to GKE') {
+                               when {
+                                   branch 'main'
+                               }
+                               steps{
+                                    echo "build deployment " + deploymentFile
+                                    dir("project2") {
+
+                                     sh 'sed -i "s/%TAG%/$BUILD_NUMBER/g" ./k8s/api1.yml'
+                                     sh 'cat ./k8s/api1.yml'
+                                   step([$class: 'KubernetesEngineBuilder',
+                                       projectId: 'jenkinsproject-342600',
+                                       clusterName: 'jenkinsproject-342600-gke',
+                                       zone: 'us-central1',
+                                       manifestPattern: 'k8s/',
+                                       credentialsId: 'macro-key-339512',
+                                       verifyDeployments: true
+                                   ])
+                      }
+                  }
+                }
     }
 }
