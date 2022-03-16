@@ -27,7 +27,7 @@ pipeline {
                steps {
                     sh 'ls $WORKSPACE '
                             dir("project2") {
-                            sh 'echo "Building.."'
+                            sh 'echo "Building loading.."'
                    withMaven {
                        sh 'mvn clean package -DskipTests'
                    }
