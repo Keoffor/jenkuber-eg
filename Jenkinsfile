@@ -97,7 +97,7 @@ pipeline {
                                        clusterName: 'jenkinsproject-342600-gke',
                                        zone: 'us-central1',
                                        manifestPattern: 'k8s/',
-                                       credentialsId: 'macro-key-339512',
+                                       credentialsId: 'jenkinsproject-342600',
                                        verifyDeployments: true
                                    ])
                       }
