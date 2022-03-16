@@ -70,7 +70,6 @@ pipeline {
                   steps {
                     dir("project2") {
                               withKubeConfig([credentialsId: 'jenkinsproject-342600',
-                                caCertificate: '/etc/ssl/certs/',
                                  serverUrl: 'https://kubernetes.default',
                                  contextName: 'gke_jenkinsproject-342600_us-central1_jenkinsproject-342600-gke',
                                  clusterName: 'jenkinsproject-342600-gke',
