@@ -6,7 +6,7 @@ metadata:
   labels:
     app: kuber-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: kuber-app
