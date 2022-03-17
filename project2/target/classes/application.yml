@@ -23,7 +23,13 @@ spring:
 #  expiry: 360000
 
 server:
-  port: 4001
+  port: 4003
   servlet:
     context-path: /
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,prometheus"
 
