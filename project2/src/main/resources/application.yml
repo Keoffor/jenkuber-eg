@@ -23,7 +23,7 @@ spring:
 #  expiry: 360000
 
 server:
-  port: 4001
+  port: 4003
   servlet:
     context-path: /
 
