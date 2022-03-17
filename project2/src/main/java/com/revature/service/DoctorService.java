@@ -10,7 +10,7 @@ import com.revature.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
@@ -50,14 +50,14 @@ public class DoctorService {
             throw new Exception();
         }
         else{
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String encodedPassword = passwordEncoder.encode(em.getPassword());
+//            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//            String encodedPassword = passwordEncoder.encode(em.getPassword());
 
             e.setId(em.getId());
             e.setEmail(em.getEmail());
             e.setFirstName(em.getFirstName());
             e.setLastName(em.getLastName());
-            e.setPassword(encodedPassword);
+            e.setPassword(em.getPassword());
             e.setRoles(Role.PHYSICIAN);
             doctorRepository.save(e);
             logger.info("user was added successfully");
