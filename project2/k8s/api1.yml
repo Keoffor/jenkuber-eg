@@ -38,3 +38,17 @@ spec:
       targetPort: 4003
   selector:
     app: kuber-app
+
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kuber-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: kuber-deployment
+  endpoints:
+    - port: kuber-loader
+      path: "/actuator/prometheus"
