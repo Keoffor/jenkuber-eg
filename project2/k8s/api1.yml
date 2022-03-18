@@ -26,14 +26,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: kuberapi
   name: kuber-service
-  namespace: default
+  labels:
+    service: kuber-service
 spec:
   type: LoadBalancer
   ports:
-    - name: kuber-loader
+    - name: http-query
       port: 4003
       targetPort: 4003
   selector:
@@ -48,7 +47,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: kuberapi
+      service: kuber-service
   endpoints:
-    - port: kuber-loader
+    - port: http-query
       path: "/actuator/prometheus"
