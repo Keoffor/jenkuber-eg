@@ -48,7 +48,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: kuber-deployment
+      app: kuberapi
   endpoints:
     - port: kuber-loader
       path: "/actuator/prometheus"
